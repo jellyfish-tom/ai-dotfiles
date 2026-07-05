@@ -8,7 +8,17 @@ Complete the [README quick start](../../README.md#-quick-start) first (`AI_DOTFI
 
 ```bash
 export AI_DOTFILES="${AI_DOTFILES:-$HOME/ai-dotfiles}"
+```
 
+Easiest path - run with no arguments for the interactive wizard (asks about editor, profile, plugins, repo, MCP modes; prints the equivalent flag command before installing):
+
+```bash
+"$AI_DOTFILES/tools/setup.sh"
+```
+
+Or pass flags directly:
+
+```bash
 "$AI_DOTFILES/tools/setup.sh" --editor vscode --profile _starter --repo /path/to/your-app
 "$AI_DOTFILES/tools/validate.sh" --editor vscode --profile _starter --repo /path/to/your-app
 ```

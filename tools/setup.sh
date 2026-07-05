@@ -29,6 +29,10 @@ usage() {
   cat <<'EOF'
 Usage: setup.sh [options]
 
+Run with no arguments in a terminal to launch the interactive setup wizard.
+It walks through every option below and prints the equivalent flag command
+for reuse in CI or scripts.
+
 Options:
   --editor MODE               vscode | cursor | both (default: vscode)
   --profile NAME              Profile to install from profiles/<name>/ (e.g. _starter)
@@ -47,6 +51,25 @@ Examples:
   tools/setup.sh --editor both --profile _starter --repo /path/to/your-app
 EOF
 }
+
+# Bare invocation on a terminal: run the interactive wizard, then re-exec
+# with the flags it produced. Non-TTY (CI) bare invocation keeps the old
+# non-interactive defaults.
+if [[ $# -eq 0 && -t 0 && -t 1 ]]; then
+  if ! command -v node >/dev/null 2>&1; then
+    echo "Interactive wizard requires node; run with flags instead (see --help)." >&2
+    exit 1
+  fi
+  _wizard_args=()
+  while IFS= read -r _wizard_line; do
+    _wizard_args+=("$_wizard_line")
+  done < <(node "$ROOT/tools/lib/wizard.mjs")
+  if [[ ${#_wizard_args[@]} -eq 0 ]]; then
+    echo "Setup wizard aborted; nothing installed." >&2
+    exit 1
+  fi
+  exec "$0" "${_wizard_args[@]}"
+fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in

@@ -35,7 +35,15 @@ git clone https://github.com/jellyfish-tom/ai-dotfiles.git ~/ai-dotfiles
 export AI_DOTFILES="$HOME/ai-dotfiles"
 ```
 
-**3. Install into your project** (`_starter` is a ready-to-use example profile)
+**3. Run the interactive wizard**
+
+```bash
+"$AI_DOTFILES/tools/setup.sh"
+```
+
+Running with no arguments walks you through every option (editor, profile, plugins, repo scaffold, advanced modes), shows a summary, and prints the equivalent flag command before installing anything - copy that command for CI or scripted reuse.
+
+Prefer flags directly? Everything the wizard asks maps 1:1 (`_starter` is a ready-to-use example profile):
 
 ```bash
 "$AI_DOTFILES/tools/setup.sh" --editor cursor --profile _starter --repo /path/to/your-app
