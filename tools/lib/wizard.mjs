@@ -14,6 +14,19 @@ import * as readline from 'node:readline/promises';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const note = (text) => process.stderr.write(text);
 
+// --- colors (stderr only; honor NO_COLOR and non-TTY) -----------------------
+
+const useColor = process.stderr.isTTY && !process.env.NO_COLOR && process.env.TERM !== 'dumb';
+const paint = (code) => (s) => (useColor ? `\x1b[${code}m${s}\x1b[0m` : s);
+const bold = paint('1');
+const dim = paint('2');
+const pink = paint('38;5;198');
+const green = paint('32');
+const yellow = paint('33');
+const red = paint('31');
+const boldPink = paint('1;38;5;198');
+const boldGreen = paint('1;32');
+
 // --- prompt backends -------------------------------------------------------
 
 async function loadInquirer() {
@@ -27,7 +40,7 @@ async function loadInquirer() {
   const cacheDir = join(homedir(), '.cache', 'ai-dotfiles', 'wizard');
   const installed = join(cacheDir, 'node_modules', '@inquirer', 'prompts');
   if (!existsSync(installed)) {
-    note('Fetching @inquirer/prompts for arrow-key menus (one-time, cached)...\n');
+    note(dim('Fetching @inquirer/prompts for arrow-key menus (one-time, cached)...\n'));
     try {
       mkdirSync(cacheDir, { recursive: true });
       execFileSync(
@@ -41,7 +54,7 @@ async function loadInquirer() {
         { stdio: ['ignore', 'ignore', 'inherit'] },
       );
     } catch {
-      note('Could not fetch @inquirer/prompts (offline?); using numbered prompts instead.\n');
+      note(yellow('Could not fetch @inquirer/prompts (offline?); using numbered prompts instead.\n'));
       return null;
     }
   }
@@ -49,7 +62,7 @@ async function loadInquirer() {
     const req = createRequire(join(cacheDir, 'noop.js'));
     return await import(pathToFileURL(req.resolve('@inquirer/prompts')).href);
   } catch {
-    note('Cached @inquirer/prompts unusable; using numbered prompts instead.\n');
+    note(yellow('Cached @inquirer/prompts unusable; using numbered prompts instead.\n'));
     return null;
   }
 }
@@ -57,11 +70,20 @@ async function loadInquirer() {
 function makeUi(inq) {
   if (inq) {
     const ctx = { output: process.stderr };
+    // Restyle inquirer's default blue "?" prefix and cyan answers/highlights
+    // to match the wizard's pink palette.
+    const theme = {
+      prefix: { idle: pink('?'), done: green('\u2714') },
+      style: {
+        answer: pink,
+        highlight: pink,
+      },
+    };
     return {
-      select: (opts) => inq.select(opts, ctx),
-      checkbox: (opts) => inq.checkbox(opts, ctx),
-      input: (opts) => inq.input(opts, ctx),
-      confirm: (opts) => inq.confirm(opts, ctx),
+      select: (opts) => inq.select({ theme, ...opts }, ctx),
+      checkbox: (opts) => inq.checkbox({ theme, ...opts }, ctx),
+      input: (opts) => inq.input({ theme, ...opts }, ctx),
+      confirm: (opts) => inq.confirm({ theme, ...opts }, ctx),
       close: () => {},
     };
   }
@@ -100,55 +122,57 @@ function makeUi(inq) {
     return line.trim();
   };
 
-  const printChoices = (message, choices) => {
-    note(`\n${message}\n`);
+  const printChoices = (message, choices, defIndex = -1) => {
+    note(`\n${bold(message)}\n`);
     choices.forEach((choice, i) => {
-      const desc = choice.description ? `  - ${choice.description}` : '';
-      note(`  ${i + 1}) ${choice.name}${desc}\n`);
+      const isDefault = i === defIndex;
+      const name = isDefault ? boldPink(choice.name) : choice.name;
+      const desc = choice.description ? dim(`  - ${choice.description}`) : '';
+      note(`  ${pink(`${i + 1})`)} ${name}${desc}\n`);
     });
   };
 
   return {
     async select({ message, choices, default: def }) {
-      printChoices(message, choices);
       const defIndex = Math.max(0, choices.findIndex((c) => c.value === def));
+      printChoices(message, choices, defIndex);
       for (;;) {
-        const raw = await answerOrAbort(`Choose 1-${choices.length} [${defIndex + 1}]: `);
+        const raw = await answerOrAbort(dim(`Choose 1-${choices.length} [${defIndex + 1}]: `));
         if (raw === '') return choices[defIndex].value;
         const idx = Number(raw) - 1;
         if (Number.isInteger(idx) && idx >= 0 && idx < choices.length) return choices[idx].value;
-        note('Invalid choice, try again.\n');
+        note(red('Invalid choice, try again.\n'));
       }
     },
     async checkbox({ message, choices }) {
-      printChoices(`${message} (comma-separated numbers, empty for none)`, choices);
+      printChoices(`${message} ${dim('(comma-separated numbers, empty for none)')}`, choices);
       for (;;) {
-        const raw = await answerOrAbort('Choose: ');
+        const raw = await answerOrAbort(dim('Choose: '));
         if (raw === '') return [];
         const idxs = raw.split(',').map((s) => Number(s.trim()) - 1);
         if (idxs.every((i) => Number.isInteger(i) && i >= 0 && i < choices.length)) {
           return [...new Set(idxs)].map((i) => choices[i].value);
         }
-        note('Invalid choice, try again.\n');
+        note(red('Invalid choice, try again.\n'));
       }
     },
     async input({ message, default: def = '', validate }) {
       for (;;) {
-        const raw = await answerOrAbort(`${message}${def ? ` [${def}]` : ''}: `);
+        const raw = await answerOrAbort(`${bold(message)}${def ? dim(` [${def}]`) : ''}: `);
         const value = raw === '' ? def : raw;
         const verdict = validate ? validate(value) : true;
         if (verdict === true) return value;
-        note(`${verdict}\n`);
+        note(red(`${verdict}\n`));
       }
     },
     async confirm({ message, default: def = true }) {
       const hint = def ? 'Y/n' : 'y/N';
       for (;;) {
-        const raw = (await answerOrAbort(`${message} (${hint}): `)).toLowerCase();
+        const raw = (await answerOrAbort(`${bold(message)} ${dim(`(${hint})`)}: `)).toLowerCase();
         if (raw === '') return def;
         if (['y', 'yes'].includes(raw)) return true;
         if (['n', 'no'].includes(raw)) return false;
-        note('Answer y or n.\n');
+        note(red('Answer y or n.\n'));
       }
     },
     close: () => rl.close(),
@@ -302,16 +326,19 @@ function printSummary(a, args) {
     ['Workspace MCP mode', a.workspaceMode],
     ['User baseline', a.userBaseline ? 'yes' : 'no'],
   ];
-  note('\nSummary:\n');
-  for (const [label, value] of rows) note(`  ${label.padEnd(20)} ${value}\n`);
-  note('\nEquivalent non-interactive command (reusable in CI/scripts):\n');
-  note(`  tools/setup.sh ${args.map(shQuote).join(' ')}\n\n`);
+  note(`\n${boldPink('Summary')}\n`);
+  for (const [label, value] of rows) {
+    const muted = value === '(none)' || value === '(skipped)' || value === 'no';
+    note(`  ${dim(label.padEnd(20))} ${muted ? dim(value) : bold(value)}\n`);
+  }
+  note(`\n${dim('Equivalent non-interactive command (reusable in CI/scripts):')}\n`);
+  note(`  ${boldGreen(`tools/setup.sh ${args.map(shQuote).join(' ')}`)}\n\n`);
 }
 
 // --- main ---------------------------------------------------------------------
 
 async function main() {
-  note('ai-dotfiles interactive setup - answers only build a setup.sh command; nothing is installed until you confirm.\n');
+  note(`${boldPink('ai-dotfiles interactive setup')}${dim(' - answers only build a setup.sh command; nothing is installed until you confirm.')}\n`);
 
   const ui = makeUi(await loadInquirer());
   let answers = {};
@@ -338,7 +365,7 @@ async function main() {
     }
     if (action === 'abort') {
       ui.close();
-      note('Aborted.\n');
+      note(yellow('Aborted.\n'));
       return 1;
     }
   }
@@ -349,7 +376,7 @@ main()
   .catch((error) => {
     // Ctrl+C inside inquirer throws ExitPromptError; treat as abort.
     if (error?.name !== 'ExitPromptError') {
-      process.stderr.write(`wizard error: ${error?.message ?? error}\n`);
+      process.stderr.write(red(`wizard error: ${error?.message ?? error}\n`));
     }
     process.exit(1);
   });

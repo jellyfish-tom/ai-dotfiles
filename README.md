@@ -4,6 +4,8 @@
 
 One command installs rules, skills, agents, prompts, and MCP servers into **Cursor** or **VS Code + Copilot** - consistently, across every project you work on. Works on macOS and Linux (Windows: manual copy from templates).
 
+![Interactive setup wizard walking through editor, profile, and plugin choices](docs/assets/setup-wizard.png)
+
 The engine has two layers:
 
 1. **An opinionated baseline, installed by default.** Every setup ships a curated foundation - coding conventions, git safety guards, token-saving output rules, session-management skills and hooks, and an MCP server template. This is deliberate: the baseline encodes practices the engine considers table stakes, and it installs as a whole. See [What comes preinstalled](#-what-comes-preinstalled-the-opinionated-baseline) for the full list and the available opt-outs.
