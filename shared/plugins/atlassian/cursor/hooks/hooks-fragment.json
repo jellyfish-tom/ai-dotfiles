@@ -1,0 +1,9 @@
+{
+  "beforeMCPExecution": [
+    {
+      "command": "./hooks/jira-write-guard.sh",
+      "timeout": 10,
+      "failClosed": true
+    }
+  ]
+}

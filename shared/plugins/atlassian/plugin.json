@@ -1,0 +1,7 @@
+{
+  "id": "atlassian",
+  "displayName": "Atlassian (Jira / Confluence)",
+  "description": "Atlassian integration: Jira write-guard hook (asks before any mutating Jira/Confluence MCP call), jira-browser-verify skill, and MCP config block for uvx mcp-atlassian.",
+  "requiredEnvVars": ["JIRA_URL", "JIRA_USERNAME", "JIRA_API_TOKEN"],
+  "installNotes": "Requires 'uv' on PATH (https://github.com/astral-sh/uv). After install, add the MCP block from mcp/cursor.json to ~/.cursor/mcp.json and export JIRA_URL, JIRA_USERNAME, JIRA_API_TOKEN in your shell config."
+}

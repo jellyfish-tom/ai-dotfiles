@@ -1,0 +1,35 @@
+# Recommended VS Code extensions (one extension ID per line).
+#
+# Docs:
+#   - VS Code extension marketplace: https://code.visualstudio.com/docs/editor/extension-marketplace
+#
+# How to install:
+#   1. In VS Code: View → Extensions (macOS: Cmd+Shift+X, Windows/Linux: Ctrl+Shift+X)
+#   2. Search for the ID below (e.g. "esbenp.prettier-vscode") and click Install
+#   OR run from a terminal:
+#     code --install-extension esbenp.prettier-vscode
+#
+# Lines starting with # are ignored by install scripts in README.md.
+#
+# Marketplace links (open in browser to read each extension's docs):
+#   esbenp.prettier-vscode     → https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+#   dbaeumer.vscode-eslint      → https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+#   bradlc.vscode-tailwindcss   → https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss
+#   eamodio.gitlens             → https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
+#   ms-playwright.playwright    → E2E test runner in IDE
+#   github.vscode-github-actions → https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions
+#   redhat.vscode-yaml          → https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
+#   anysphere.remote-ssh        → https://marketplace.visualstudio.com/items?itemName=anysphere.remote-ssh
+#   pkief.material-icon-theme   → https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+#   dracula-theme.theme-dracula → https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula
+
+esbenp.prettier-vscode
+dbaeumer.vscode-eslint
+bradlc.vscode-tailwindcss
+eamodio.gitlens
+ms-playwright.playwright
+github.vscode-github-actions
+redhat.vscode-yaml
+anysphere.remote-ssh
+pkief.material-icon-theme
+dracula-theme.theme-dracula

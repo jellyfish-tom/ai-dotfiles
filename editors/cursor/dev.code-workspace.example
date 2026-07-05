@@ -1,0 +1,12 @@
+{
+  "folders": [
+    { "path": "/path/to/novus", "name": "novus" },
+    { "path": "/path/to/flow-observer", "name": "flow-observer" },
+    { "path": "/path/to/ai-dotfiles", "name": "ai-dotfiles" }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true
+    }
+  }
+}

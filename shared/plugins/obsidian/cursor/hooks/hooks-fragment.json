@@ -1,0 +1,8 @@
+{
+  "workspaceOpen": [
+    {
+      "command": "./hooks/open-obsidian.sh",
+      "timeout": 10
+    }
+  ]
+}

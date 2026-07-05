@@ -1,0 +1,12 @@
+---
+description: "Run accessibility (a11y) checks on a target UI surface using browser MCP. WCAG-oriented snapshot and keyboard review - report only, no code edits unless asked."
+name: "accessibility-qa"
+argument-hint: "SURFACE_OR_URL"
+agent: "agent"
+---
+
+Load the `accessibility-qa` skill (`.github/skills/accessibility-qa/SKILL.md`).
+
+Ask for surface, environment, and any project-specific scope (market, brand, route) required by operator-context rules or `.cursor/docs/browser-verify.project.md`.
+
+Navigate to the target UI, run the skill checklist, and return the structured a11y report. Do not edit code unless the operator explicitly asks after the report.

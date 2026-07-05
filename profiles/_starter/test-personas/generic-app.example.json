@@ -1,0 +1,5 @@
+{
+  "name": "generic-app-example",
+  "description": "Example persona for public profile smoke tests",
+  "baseUrl": "http://localhost:3000"
+}

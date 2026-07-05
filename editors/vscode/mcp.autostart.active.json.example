@@ -1,0 +1,25 @@
+{
+  "servers": {
+    "Playwright": {
+      "url": "http://127.0.0.1:37101/mcp",
+      "type": "http"
+    },
+    "Figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "headers": {},
+      "type": "http"
+    },
+    "Jira-Server-MCP": {
+      "url": "http://127.0.0.1:37102/mcp",
+      "type": "http"
+    },
+    "agentmemory": {
+      "url": "http://127.0.0.1:37103/mcp",
+      "type": "http"
+    },
+    "console-ninja": {
+      "url": "http://127.0.0.1:37104/mcp",
+      "type": "http"
+    }
+  }
+}

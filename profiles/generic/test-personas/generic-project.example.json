@@ -1,0 +1,43 @@
+{
+    "description": "Example only. Copy to a local, uncommitted persona file for your target project and replace placeholders with values from your own test tooling.",
+    "surface": "replace-with-target-surface",
+    "environment": {
+        "baseUrl": "https://localhost:3000",
+        "pathPrefix": "/replace-with-app-path",
+        "loginPath": "/login",
+        "name": "local"
+    },
+    "identity": {
+        "primaryId": "TEST-ID-0001"
+    },
+    "contact": {
+        "firstName": "TestFirst",
+        "lastName": "TestLast",
+        "phone": "+10000000000",
+        "email": "test.user@example.invalid"
+    },
+    "allFields": {
+        "field_0": {
+            "label": "Primary ID",
+            "value": "TEST-ID-0001"
+        },
+        "field_1": {
+            "label": "Email",
+            "value": "test.user@example.invalid"
+        },
+        "field_2": {
+            "label": "Phone",
+            "value": "+10000000000"
+        }
+    },
+    "fieldHints": {
+        "common": [
+            "firstName",
+            "lastName",
+            "phone",
+            "email",
+            "primaryId"
+        ],
+        "useAllFieldsWhen": "Paste from your test-data source and map labels to the visible form fields on the current step."
+    }
+}

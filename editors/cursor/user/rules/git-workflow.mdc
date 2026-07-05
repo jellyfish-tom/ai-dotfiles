@@ -1,0 +1,29 @@
+---
+description: Git safety - no auto tests/commits/push; ACP when explicitly requested.
+alwaysApply: true
+---
+
+# Git workflow (user-global)
+
+Pairs with `editors/vscode/user/instructions/git-workflow.instructions.md`.
+
+## No auto tests
+
+Never run tests unless user explicitly asks (`run tests`, `npm test`, etc.). Ask first if tests seem useful.
+
+## No auto commit/push
+
+Never `git commit` or `git push` without explicit request (`commit`, `push`, `acp`, etc.). `git add` only when preparing a user-requested commit. Ask if unclear.
+
+## ACP (when requested)
+
+1. `git status` + `git diff --stat`
+2. `git add -A`
+3. Conventional commit from diff
+4. `git push` only if user asked push
+
+When a **project profile** defines custom commit format (e.g. novus ACP), follow that profile's `git-workflow-project` or operator-context instructions instead.
+
+## Destructive commands
+
+No rm/drop/reset/overwrite without explicit approval. Describe effect first; prefer non-destructive alternatives.

@@ -1,0 +1,15 @@
+---
+description: Ask operator and stop before assuming project-specific scope (region, brand, task id, env).
+alwaysApply: true
+---
+
+# Operator choice gate (user-global)
+
+When project- or app-specific choices are required and **not already stated** by the operator:
+
+- **Ask, list options when known, and stop** - do not guess or infer from branch names, paths, or ticket titles alone.
+- Applies to: region/market, brand, Jira/task id, environment, flow/surface scope, deploy target, or any parameter the loaded project profile marks as required.
+
+After the operator answers, use values exactly in commits, PRs, and implementation scope. If partial, ask for the remainder and stop again.
+
+Project profiles (e.g. `my-project-operator-context`) may add **additional** required parameters on top of this gate.

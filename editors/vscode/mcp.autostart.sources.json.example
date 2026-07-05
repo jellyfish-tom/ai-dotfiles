@@ -1,0 +1,27 @@
+{
+  "servers": {
+    "Playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "type": "stdio"
+    },
+    "Figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "headers": {},
+      "type": "http"
+    },
+    "agentmemory": {
+      "command": "npx",
+      "args": ["-y", "@agentmemory/mcp"],
+      "env": {
+        "AGENTMEMORY_URL": "http://localhost:3111"
+      },
+      "type": "stdio"
+    },
+    "console-ninja": {
+      "command": "npx",
+      "args": ["-y", "-c", "node ~/.console-ninja/mcp/"],
+      "type": "stdio"
+    }
+  }
+}

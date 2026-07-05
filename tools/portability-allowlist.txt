@@ -1,0 +1,14 @@
+# Paths exempt from check-generic-portability.sh (relative to ai-dotfiles repo root).
+# See docs/maintainers/PORTABILITY_ALLOWLIST.md for policy.
+#
+# Trailing / = prefix match (directory and descendants).
+
+docs/AI-STACK.md
+docs/maintainers/
+editors/cursor/dev.code-workspace.example
+editors/cursor/user/rules/002-obsidian.mdc
+editors/cursor/user/rules/git-workflow.mdc
+editors/cursor/user/rules/operator-choice-gate.mdc
+editors/cursor/user/skills/jira-browser-verify/SKILL.md
+profiles/generic/github/instructions/knowledge-base.instructions.md
+profiles/generic/github/instructions/obsidian.instructions.md

@@ -1,0 +1,10 @@
+---
+description: Ask for region, brand, task id, flow, or environment when project work is ambiguous.
+alwaysApply: true
+---
+
+# Operator Context
+
+When region, brand, task id, flow, or environment is required and not stated, ask and stop.
+
+See the VS Code counterpart at `.github/instructions/operator-context.instructions.md` when both editors are in use.

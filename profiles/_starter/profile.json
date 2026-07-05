@@ -1,0 +1,36 @@
+{
+  "id": "_starter",
+  "displayName": "Example App",
+  "setup": {
+    "editor": "cursor",
+    "workspaceMode": "direct",
+    "userMcpMode": "direct",
+    "installExtensions": false
+  },
+  "validation": {
+    "vscode": {
+      "requiredInstructions": ["instructions/operator-context.instructions.md"],
+      "requiredAgents": ["jira-investigator", "onboarding-tour"],
+      "skillCount": 7,
+      "requiredPrompts": ["prompts/figma-to-project.prompt.md"],
+      "forbiddenPaths": [
+        "prompts/figma-to-code.prompt.md",
+        "instructions/design-system.instructions.md"
+      ],
+      "agentsMdMustContain": ["figma-to-project"]
+    },
+    "cursor": {
+      "requiredRules": ["operator-context.mdc"],
+      "requiredCommands": ["jira-issue.md"],
+      "requiredDocs": []
+    }
+  },
+  "parity": {
+    "pairs": [
+      {
+        "github": "instructions/operator-context.instructions.md",
+        "cursor": "rules/operator-context.mdc"
+      }
+    ]
+  }
+}

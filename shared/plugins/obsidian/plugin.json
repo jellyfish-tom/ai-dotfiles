@@ -1,0 +1,7 @@
+{
+  "id": "obsidian",
+  "displayName": "Obsidian",
+  "description": "Obsidian vault integration: workspace boundary rule, workspaceOpen hook to ensure the app is running, and MCP config block for the Local REST API.",
+  "requiredEnvVars": [],
+  "installNotes": "After install, add the MCP block from mcp/cursor.json to ~/.cursor/mcp.json. Set your Local REST API key in Obsidian → Community Plugins → Local REST API."
+}

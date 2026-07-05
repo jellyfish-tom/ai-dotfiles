@@ -1,0 +1,7 @@
+# Append to <repo>/.git/info/exclude (local only - never committed)
+# Installed by tools/setup.sh --editor cursor --repo PATH
+# ai-dotfiles: ai-tooling local exclude
+.cursorignore
+skills-lock.json
+.agents/skills/
+.clinerules/

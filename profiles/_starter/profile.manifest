@@ -1,0 +1,3 @@
+# Delete from .github/ after overlay - generic paths this profile replaces (see docs/maintainers/PROFILE_CONTRACT.md)
+prompts/figma-to-code.prompt.md
+instructions/design-system.instructions.md

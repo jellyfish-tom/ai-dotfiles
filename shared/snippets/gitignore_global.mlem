@@ -1,0 +1,6 @@
+# Append to ~/.gitignore_global (git config --global core.excludesfile)
+# Local .mlem operator notes and browser personas (keep *.example.json) - any repo
+.mlem/docs/
+.mlem/test-personas/*
+!.mlem/test-personas/
+!.mlem/test-personas/*.example.json

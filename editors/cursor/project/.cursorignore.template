@@ -1,0 +1,70 @@
+# ========================================
+# 🛑 TOKEN-HEAVY & GENERATED FILES
+# ========================================
+*.min.js
+*.min.css
+*.map
+*.bundle.js
+*chunk*.js
+.turbo/
+.nx/
+__generated__/
+*.generated.*
+typechain-types/
+
+# ========================================
+# 🛑 LARGE DATASETS & MOCKS
+# ========================================
+*mock*.json
+*fixture*.json
+*.csv
+*.tsv
+*.sql
+*.sqlite
+*.db
+seed-data/
+
+# ========================================
+# 🛑 LOGS & CACHES
+# ========================================
+*.log
+logs/
+.logs/
+.cache/
+.eslintcache
+.stylelintcache
+.tsbuildinfo
+
+# ========================================
+# 🛑 PACKAGE MANAGERS & LOCKFILES
+# ========================================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# ========================================
+# 🛑 BUILD / DEPENDENCIES
+# ========================================
+node_modules/
+dist/
+build/
+.next/
+out/
+target/
+.gradle/
+__pycache__/
+.venv/
+
+# ========================================
+# 🛑 OS & ENV
+# ========================================
+.DS_Store
+Thumbs.db
+.env.local
+.env.*.local
+
+# ========================================
+# 🎯 DYNAMIC FOCUS MODE (Monorepo)
+# Managed by the `workspace-focus` skill.
+# ========================================

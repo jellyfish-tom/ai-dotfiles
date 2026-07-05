@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "./hooks/session-resume.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./hooks/git-safety.sh",
+        "matcher": "git\\s",
+        "timeout": 10
+      }
+    ]
+  }
+}

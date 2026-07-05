@@ -1,0 +1,12 @@
+# Optional operator overlay - copy lines you need into <repo>/.git/info/exclude
+# Keeps local AI scaffolding out of git status without changing project .gitignore
+# ai-dotfiles: operator overlay example (not auto-installed)
+
+.ai/
+.github/copilot-instructions.md
+.github/skills/
+.github/
+AGENTS.md
+.cursor/
+.mlem/
+.codegraph/

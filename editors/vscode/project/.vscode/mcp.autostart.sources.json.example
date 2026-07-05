@@ -1,0 +1,14 @@
+{
+    "servers": {
+        "codegraph": {
+            "command": "codegraph",
+            "args": [
+                "serve",
+                "--mcp",
+                "--path",
+                "${workspaceFolder}"
+            ],
+            "type": "stdio"
+        }
+    }
+}

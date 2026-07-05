@@ -1,0 +1,44 @@
+---
+alwaysApply: true
+description: Assign optimal models (cost vs quality) to plan/execution tasks and hand off at model-switch gates
+priority: high
+---
+
+# Model tiering & handoff
+
+Apply whenever authoring plans (writing-plans/brainstorming), executing plans (executing-plans/subagent-driven-development), or running any multi-step task. Goal: cheapest model that meets each task's bar; never run cheap work on an expensive model, never thrash.
+
+## Tiers
+
+- **T0 - cheap/fast**: deterministic boilerplate, scaffolding, codemods, file moves, mechanical edits with exact specs, running tests/lint and reporting.
+- **T1 - mid**: pattern-following implementation against a clear reference, standard feature/test work, light judgement.
+- **T2 - high**: ambiguous design, architecture, cross-repo/runtime debugging, security/perf, tricky concurrency. Also **plan authoring** and the **final pre-merge review**.
+
+## Tier → model mapping (single source of truth - edit here only)
+
+| Tier | Model             | Fallback |
+| ---- | ----------------- | -------- |
+| T0   | Composer 2.5      | -        |
+| T1   | Sonnet 4.6 Medium | -        |
+| T2   | Opus 4.8 Medium   | GPT-5.5  |
+
+Resolve tier → model from this table. If a mapped model is unavailable, **ask the user - do not silently substitute** (per Task-tool model policy). Never enable MAX Mode unless the user asks or context genuinely exceeds the window.
+
+## Selection policy
+
+- Tag every plan task with a tier. Group tasks into **contiguous same-model phases** (aim ≤3–4 phases) to minimise switches.
+- Spend T2 where it has leverage: planning + one final review around otherwise cheap implementation.
+- **Cheap-first escalation ratchet**: run at the assigned tier; after **2 failed attempts on the same task / same error class**, STOP and escalate one tier via a handoff - do not keep retrying.
+- **Reserve costly models for decisions, not reading**: dispatch exploration/research to cheap read-only `explore` subagents (or a T0 subagent) and let the higher-tier model synthesise.
+- **Verify-before-handoff**: a phase may not hand off red - typecheck + lint + targeted tests must be green at the gate so a cheaper next phase never inherits breakage.
+
+## Handoff gate (at every model switch)
+
+1. Run the **session-handoff** skill to update `<workspace>/.ai/session-resume.md` (completed tasks, current branch/commit, exact next task, decisions/blockers).
+2. Update task statuses in the plan file frontmatter (completed phase → `completed`).
+3. **STOP and notify the user** - do not start the next phase yourself:
+
+   > Phase [X] complete (verified green). Handoff updated. **Switch model to [next-tier model]**, start a new chat, paste:
+   > `Continue this work. Context: @.ai/session-resume.md - Immediate task: [next task]`
+
+The session-resume file must record the per-phase model assignment and the gate rule so a fresh session enforces this even without the plan open.

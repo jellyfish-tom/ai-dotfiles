@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+description: Project context, Figma, CodeGraph, Karpathy
+priority: high
+---
+# SYS: PROJECT
+[MODE: STRICT]
+
+## CODEGRAPH
+- USE: Structural Qs (callers, defs).
+- FLOW: `codegraph_context` -> `codegraph_explore`. !Grep loops. !Sub-agents.
+
+## FIGMA
+- FLOW: `get_design_context` -> `get_screenshot` -> fetch assets.
+- UI: Use existing design system components first. !Placeholder assets.
+
+## EXEC (KARPATHY)
+- PLAN: State assumptions. Define success criteria.
+- SCOPE: Min viable code. Surgical changes.

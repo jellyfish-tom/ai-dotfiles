@@ -1,0 +1,34 @@
+---
+description: Obsidian vault is outside Cursor workspace - use MCP and obsidian:// links for vault docs.
+alwaysApply: true
+---
+
+# Obsidian vault (Cursor split)
+
+## Workspace boundary
+
+- Vault path is **not** in the Cursor workspace. Do not `@`-mention vault paths expecting Cursor to open them.
+- Read/write vault notes via **Obsidian MCP** (`obsidian` server). Obsidian app must be running.
+- Do **not** use absolute file path citations for vault notes - use `obsidian://` URIs instead.
+
+## Linking vault notes (user-facing)
+
+When citing a vault note for the operator to open, use **Obsidian URI** markdown links:
+
+```text
+[Title](obsidian://open?vault=YOUR%20VAULT%20NAME&file=path/to/note)
+```
+
+Rules:
+
+- `vault` = your vault name (URL-encode spaces → `%20`)
+- `file` = vault-relative path; `.md` optional
+
+## Agent read/write
+
+1. **Search/read vault:** Obsidian MCP tools first.
+2. **Create/edit vault notes:** Obsidian MCP or explicit operator request only.
+
+## Operator opens notes
+
+Operator reads vault in **Obsidian**. Operator edits code in **Cursor**. Optional: Obsidian plugin **Open in IDE** for vault → Cursor when needed.
