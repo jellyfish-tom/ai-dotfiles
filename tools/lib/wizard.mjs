@@ -332,7 +332,13 @@ function printSummary(a, args) {
     note(`  ${dim(label.padEnd(20))} ${muted ? dim(value) : bold(value)}\n`);
   }
   note(`\n${dim('Equivalent non-interactive command (reusable in CI/scripts):')}\n`);
-  note(`  ${boldGreen(`tools/setup.sh ${args.map(shQuote).join(' ')}`)}\n\n`);
+  note(`  ${boldGreen(`tools/setup.sh ${args.map(shQuote).join(' ')}`)}\n`);
+
+  const validateArgs = ['--editor', a.editor];
+  if (a.profile) validateArgs.push('--profile', a.profile);
+  if (a.repo) validateArgs.push('--repo', a.repo);
+  note(`\n${dim('Matching validation command (run after setup):')}\n`);
+  note(`  ${boldGreen(`tools/validate.sh ${validateArgs.map(shQuote).join(' ')}`)}\n\n`);
 }
 
 // --- main ---------------------------------------------------------------------
