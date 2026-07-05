@@ -4,7 +4,7 @@
 
 One command installs rules, skills, agents, prompts, and MCP servers into **Cursor** or **VS Code + Copilot** - consistently, across every project you work on. Works on macOS and Linux (Windows: manual copy from templates).
 
-![Interactive setup wizard walking through editor, profile, and plugin choices](docs/assets/setup-wizard.png)
+![Config layers: machine/IDE, user-global, workspace, and session runtime](docs/assets/stack-layers.png)
 
 The engine has two layers:
 
@@ -42,6 +42,8 @@ export AI_DOTFILES="$HOME/ai-dotfiles"
 ```bash
 "$AI_DOTFILES/tools/setup.sh"
 ```
+
+![Interactive setup wizard walking through editor, profile, and plugin choices](docs/assets/setup-wizard.png)
 
 Running with no arguments walks you through every option (editor, profile, plugins, repo scaffold, advanced modes), shows a summary, and prints the equivalent flag command before installing anything - copy that command for CI or scripted reuse.
 
